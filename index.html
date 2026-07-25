@@ -180,6 +180,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.179/build/three.min.js"></script>
+
 <script>
     // LOADER ANIMATION
     window.addEventListener("load", () => {
@@ -272,6 +274,114 @@
     });
 
     console.log("%c✅ Images fixed - now pointing to root directory", "color: #00ffc3; font-size: 16px");
+    /* ==========================================================
+   Interactive Project Cube
+========================================================== */
+
+const cubeCanvas = document.getElementById("projectCube");
+
+if (cubeCanvas) {
+
+    const cubeScene = new THREE.Scene();
+
+    const cubeCamera = new THREE.PerspectiveCamera(
+        45,
+        cubeCanvas.clientWidth / cubeCanvas.clientHeight,
+        0.1,
+        100
+    );
+
+    cubeCamera.position.z = 5;
+
+    const cubeRenderer = new THREE.WebGLRenderer({
+        console.log(cubeCanvas.clientWidth);
+        console.log(cubeCanvas.clientHeight);
+        canvas: cubeCanvas,
+        alpha: true,
+        antialias: true
+    });
+
+    cubeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    cubeRenderer.setSize(
+        cubeCanvas.clientWidth,
+        cubeCanvas.clientHeight
+    );
+
+    // Temporary colors
+    // Replace these later with your images
+
+    const materials = [
+
+        new THREE.MeshStandardMaterial({ color: 0x8b5cf6 }),
+        new THREE.MeshStandardMaterial({ color: 0x06b6d4 }),
+        new THREE.MeshStandardMaterial({ color: 0x22c55e }),
+        new THREE.MeshStandardMaterial({ color: 0xec4899 }),
+        new THREE.MeshStandardMaterial({ color: 0xf97316 }),
+        new THREE.MeshStandardMaterial({ color: 0xffffff })
+
+    ];
+
+    const cube = new THREE.Mesh(
+
+        new THREE.BoxGeometry(2,2,2),
+
+        materials
+
+    );
+
+    cubeScene.add(cube);
+
+    const light1 = new THREE.PointLight(0x7df9ff, 5);
+
+    light1.position.set(5,5,5);
+
+    cubeScene.add(light1);
+
+    const light2 = new THREE.AmbientLight(0xffffff,1.4);
+
+    cubeScene.add(light2);
+
+    let targetY = 0;
+
+    document.querySelectorAll(".cube-list li").forEach(item=>{
+
+        item.addEventListener("click",()=>{
+
+            targetY = Number(item.dataset.face) * Math.PI/3;
+
+        });
+
+    });
+
+    function animateCube(){
+
+        requestAnimationFrame(animateCube);
+
+        cube.rotation.x += 0.003;
+
+        cube.rotation.y += (targetY-cube.rotation.y)*0.08;
+
+        cubeRenderer.render(cubeScene,cubeCamera);
+
+    }
+
+    animateCube();
+
+    window.addEventListener("resize",()=>{
+
+        cubeCamera.aspect =
+        cubeCanvas.clientWidth/cubeCanvas.clientHeight;
+
+        cubeCamera.updateProjectionMatrix();
+
+        cubeRenderer.setSize(
+            cubeCanvas.clientWidth,
+            cubeCanvas.clientHeight
+        );
+
+    });
+
+}
 </script>
 </body>
 </html>
