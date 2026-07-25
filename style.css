@@ -373,6 +373,12 @@ button{
             drop-shadow(0 0 25px rgba(0, 255, 213, 0.5));
     animation: hexGlow 2.5s ease-in-out infinite alternate;
 }
+.hexagon{
+    overflow:hidden;
+}
+#projectCube{
+    aspect-ratio:1/1;
+}
 
 @keyframes hexGlow {
     from {
@@ -695,17 +701,19 @@ footer{
     box-shadow:0 0 25px rgba(0,255,255,.25);
 
 }
-
+#projectCube{
+    background:rgba(255,255,255,0.03);
+    border-radius:20px;
+}
+button{
+    transition:.3s;
+}
 .cube-right{
-
     flex:1;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
+    min-height:500px;
 }
 
 #projectCube{
@@ -742,4 +750,17 @@ height:350px;
 
 }
 
+}
+.skill-card{
+    transition:.3s;
+}
+.project-card{
+    transition:.3s;
+}
+.glass-card{
+    box-shadow:0 0 30px rgba(0,255,213,.08);
+}
+nav a:hover,
+nav a.active{
+    text-shadow:0 0 10px #00ffd5;
 }
