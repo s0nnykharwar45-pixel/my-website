@@ -180,8 +180,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.179/build/three.min.js"></script>
-
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 <script>
     // LOADER ANIMATION
     window.addEventListener("load", () => {
@@ -293,13 +292,14 @@ if (cubeCanvas) {
 
     cubeCamera.position.z = 5;
 
-    const cubeRenderer = new THREE.WebGLRenderer({
-        console.log(cubeCanvas.clientWidth);
-        console.log(cubeCanvas.clientHeight);
-        canvas: cubeCanvas,
-        alpha: true,
-        antialias: true
-    });
+console.log(cubeCanvas.clientWidth);
+console.log(cubeCanvas.clientHeight);
+
+const cubeRenderer = new THREE.WebGLRenderer({
+    canvas: cubeCanvas,
+    alpha: true,
+    antialias: true
+});
 
     cubeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     cubeRenderer.setSize(
