@@ -176,3 +176,110 @@ if (cubeCanvas) {
     });
 
 }
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.179/build/three.module.js";
+
+// ===============================
+// Project Cube
+// ===============================
+
+const canvas = document.getElementById("projectCube");
+
+if (canvas) {
+
+    // Scene
+    const scene = new THREE.Scene();
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(
+        45,
+        canvas.clientWidth / canvas.clientHeight,
+        0.1,
+        100
+    );
+
+    camera.position.z = 5;
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true
+    });
+
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Lights
+    const ambient = new THREE.AmbientLight(0xffffff, 1.4);
+    scene.add(ambient);
+
+    const light = new THREE.PointLight(0x7df9ff, 8);
+    light.position.set(5,5,5);
+    scene.add(light);
+
+    // Materials
+    const materials = [
+
+        new THREE.MeshStandardMaterial({color:0x8b5cf6}),
+        new THREE.MeshStandardMaterial({color:0x00e5ff}),
+        new THREE.MeshStandardMaterial({color:0x00ff99}),
+        new THREE.MeshStandardMaterial({color:0xff4fd8}),
+        new THREE.MeshStandardMaterial({color:0xff9800}),
+        new THREE.MeshStandardMaterial({color:0xffffff})
+
+    ];
+
+    // Cube
+    const cube = new THREE.Mesh(
+
+        new THREE.BoxGeometry(2,2,2),
+
+        materials
+
+    );
+
+    scene.add(cube);
+
+    // Mouse Rotation
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    window.addEventListener("mousemove",(e)=>{
+
+        mouseX = (e.clientX/window.innerWidth-.5)*0.8;
+        mouseY = (e.clientY/window.innerHeight-.5)*0.6;
+
+    });
+
+    // Animation
+
+    function animate(){
+
+        requestAnimationFrame(animate);
+
+        cube.rotation.y += 0.008;
+
+        cube.rotation.x += (mouseY-cube.rotation.x)*0.05;
+
+        cube.rotation.y += (mouseX-cube.rotation.y)*0.02;
+
+        renderer.render(scene,camera);
+
+    }
+
+    animate();
+
+    // Resize
+
+    window.addEventListener("resize",()=>{
+
+        camera.aspect = canvas.clientWidth/canvas.clientHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(canvas.clientWidth,canvas.clientHeight);
+
+    });
+
+}
